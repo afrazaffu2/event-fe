@@ -20,7 +20,7 @@ const ENVIRONMENTS = {
 };
 
 // Set the active environment (change this to switch environments)
-const ACTIVE_ENVIRONMENT: keyof typeof ENVIRONMENTS = 'production';
+const ACTIVE_ENVIRONMENT: keyof typeof ENVIRONMENTS = 'development';
 
 // Get current environment configuration
 export const getCurrentEnv = () => {
