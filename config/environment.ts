@@ -3,18 +3,18 @@
 
 const ENVIRONMENTS = {
   development: {
-    API_BASE_URL: 'http://192.168.7.20:8000/', // Local Development Backend URL
+    API_BASE_URL: 'http://192.168.7.20:8000', // Local Development Backend URL
     FRONTEND_URL: 'http://192.168.7.20:9002', // Local Development Frontend URL
     DESCRIPTION: 'Local Development Environment',
   },
   production: {
     API_BASE_URL: 'https://backend-rxua.onrender.com', // Production Backend URL
-    FRONTEND_URL: 'https://event-management-frontend.onrender.com', // Production Frontend URL
+    FRONTEND_URL: 'https://event-fe.onrender.com', // Production Frontend URL
     DESCRIPTION: 'Production Environment',
   },
   custom: {
-    API_BASE_URL: 'https://event-management-be-2.onrender.com', // Alternative Production Backend URL
-    FRONTEND_URL: 'https://event-management-frontend.onrender.com', // Production Frontend URL
+    API_BASE_URL: 'https://backend-rxua.onrender.com', // Alternative Production Backend URL
+    FRONTEND_URL: 'https://event-fe.onrender.com', // Production Frontend URL
     DESCRIPTION: 'Alternative Production Environment',
   },
 };

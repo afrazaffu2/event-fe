@@ -14,12 +14,14 @@ export default function ActivatePage() {
   const [loading, setLoading] = useState(true);
   const [activating, setActivating] = useState(false);
   const [activated, setActivated] = useState(false);
+  const [debug, setDebug] = useState<string>('');
 
   const sno = params?.sno as string;
 
   useEffect(() => {
     const activateTicket = async () => {
       if (!sno) {
+        setDebug('No SNO provided');
         toast({
           variant: 'destructive',
           title: 'Invalid Ticket',
@@ -30,11 +32,14 @@ export default function ActivatePage() {
 
       try {
         setLoading(true);
+        setDebug(`Starting activation for SNO: ${sno}`);
         
         // First, try to get the booking details
+        setDebug('Fetching booking details...');
         const foundBooking = await getBookingBySno(sno);
         
         if (!foundBooking) {
+          setDebug('Booking not found');
           toast({
             variant: 'destructive',
             title: 'Ticket Not Found',
@@ -44,12 +49,14 @@ export default function ActivatePage() {
         }
 
         setBooking(foundBooking);
+        setDebug('Booking found, scanning QR...');
 
         // Always call the API to toggle the ticket status
         setActivating(true);
         const updatedBooking = await scanQrBySno(sno);
         setBooking(updatedBooking);
         setActivated(true);
+        setDebug('QR scan completed successfully');
         
         toast({
           title: updatedBooking.is_activated ? 'Ticket Activated!' : 'Ticket Deactivated!',
@@ -60,6 +67,7 @@ export default function ActivatePage() {
 
       } catch (error) {
         console.error('Error activating ticket:', error);
+        setDebug(`Error: ${error instanceof Error ? error.message : 'Unknown error'}`);
         toast({
           variant: 'destructive',
           title: 'Activation Failed',
@@ -218,6 +226,14 @@ export default function ActivatePage() {
                 Print Ticket
               </button>
             </div>
+
+            {/* Debug Information */}
+            {debug && (
+              <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                <p className="text-blue-800 font-medium text-sm">Debug Info:</p>
+                <p className="text-blue-700 text-xs mt-1">{debug}</p>
+              </div>
+            )}
 
             {/* Success Message */}
             {activated && (
