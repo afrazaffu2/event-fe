@@ -1,0 +1,91 @@
+[build]
+  # Base directory for the build
+  base = "frontend"
+  
+  # Build command
+  command = "npm run build"
+  
+  # Publish directory (Next.js build output)
+  publish = ".next"
+
+[build.environment]
+  # Set Node.js version
+  NODE_VERSION = "18"
+  
+  # Environment variables
+  NEXT_PUBLIC_API_BASE_URL = "https://event-management-be-2.onrender.com"
+  
+  # Build optimizations
+  NODE_ENV = "production"
+  NPM_FLAGS = "--legacy-peer-deps"
+
+# Redirects for Next.js routing
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Headers for security and performance
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+
+# Cache headers for static assets
+[[headers]]
+  for = "/_next/static/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/_next/image/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# API routes (if any)
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/api/:splat"
+  status = 200
+
+# Handle Next.js specific routes
+[[redirects]]
+  from = "/events/*"
+  to = "/events/[slug]"
+  status = 200
+
+[[redirects]]
+  from = "/activate/*"
+  to = "/activate/[sno]"
+  status = 200
+
+# SPA fallback for client-side routing
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+  conditions = {Role = ["admin"]}
+
+# Functions (if using Netlify Functions)
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+
+# Edge functions (if using Netlify Edge Functions)
+[edge_functions]
+  directory = "netlify/edge-functions"
+
+# Plugin configuration
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+# Development settings
+[dev]
+  command = "npm run dev"
+  port = 9002
+  publish = ".next"
+  framework = "next" 
