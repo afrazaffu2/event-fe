@@ -11,20 +11,22 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const auth = useAuth();
 
-  // Publicly accessible pages that don't require the sidebar layout
-  const isNakedLayout =
+  // Publicly accessible pages that don't require the sidebar layout or authentication
+  const isNakedLayout = pathname ? (
     (pathname.startsWith('/events/') && !pathname.startsWith('/events/transactions')) ||
     pathname.startsWith('/tickets/') ||
     pathname.startsWith('/activate/') ||
-    pathname.startsWith('/payment-success');
+    pathname.startsWith('/payment-success')
+  ) : false;
 
+  // If this is a naked layout page, render without any auth checks or sidebar
   if (isNakedLayout) {
     return <>{children}</>;
   }
 
   // Handle auth logic for all other pages (including /login and protected routes)
   useEffect(() => {
-    if (auth.loading) return; // Wait for auth state to be determined
+    if (auth.loading || !pathname) return; // Wait for auth state to be determined
 
     // If user is on login page but already authenticated, redirect to dashboard
     if (auth.isAuthenticated && pathname === '/login') {
