@@ -1,7 +1,4 @@
 [build]
-  # Base directory for the build
-  base = "frontend"
-  
   # Build command
   command = "npm run build"
   
