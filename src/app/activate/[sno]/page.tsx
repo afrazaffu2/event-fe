@@ -1,10 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import { CheckCircle, Calendar, Clock, User, Star } from 'lucide-react';
-import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
 import { scanQrBySno, getBookingBySno } from '@/services/bookingService';
 import type { Booking } from '@/types';
@@ -82,20 +79,21 @@ export default function ActivatePage() {
   if (!sno) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 flex items-center justify-center p-4">
-        <Card className="w-full max-w-md">
-          <CardContent className="p-8 text-center">
-            <div className="text-red-500 mb-4">
-              <CheckCircle className="h-16 w-16 mx-auto" />
-            </div>
-            <h2 className="text-2xl font-bold mb-2">Invalid Ticket</h2>
-            <p className="text-muted-foreground mb-6">
-              No ticket number provided.
-            </p>
-            <Button onClick={() => router.push('/')}>
-              Go Home
-            </Button>
-          </CardContent>
-        </Card>
+        <div className="w-full max-w-md bg-white rounded-lg shadow-xl p-8 text-center">
+          <div className="text-red-500 mb-4">
+            <CheckCircle className="h-16 w-16 mx-auto" />
+          </div>
+          <h2 className="text-2xl font-bold mb-2">Invalid Ticket</h2>
+          <p className="text-gray-600 mb-6">
+            No ticket number provided.
+          </p>
+          <button 
+            onClick={() => router.push('/')}
+            className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700"
+          >
+            Go Home
+          </button>
+        </div>
       </div>
     );
   }
@@ -103,13 +101,11 @@ export default function ActivatePage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 flex items-center justify-center p-4">
-        <Card className="w-full max-w-md">
-          <CardContent className="p-8 text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-            <p className="text-lg font-semibold">Activating your ticket...</p>
-            <p className="text-muted-foreground">Please wait a moment</p>
-          </CardContent>
-        </Card>
+        <div className="w-full max-w-md bg-white rounded-lg shadow-xl p-8 text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-lg font-semibold">Activating your ticket...</p>
+          <p className="text-gray-600">Please wait a moment</p>
+        </div>
       </div>
     );
   }
@@ -117,28 +113,29 @@ export default function ActivatePage() {
   if (!booking) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 flex items-center justify-center p-4">
-        <Card className="w-full max-w-md">
-          <CardContent className="p-8 text-center">
-            <div className="text-red-500 mb-4">
-              <CheckCircle className="h-16 w-16 mx-auto" />
-            </div>
-            <h2 className="text-2xl font-bold mb-2">Ticket Not Found</h2>
-            <p className="text-muted-foreground mb-6">
-              No ticket found with number {sno}
-            </p>
-            <Button onClick={() => router.push('/')}>
-              Go Home
-            </Button>
-          </CardContent>
-        </Card>
+        <div className="w-full max-w-md bg-white rounded-lg shadow-xl p-8 text-center">
+          <div className="text-red-500 mb-4">
+            <CheckCircle className="h-16 w-16 mx-auto" />
+          </div>
+          <h2 className="text-2xl font-bold mb-2">Ticket Not Found</h2>
+          <p className="text-gray-600 mb-6">
+            No ticket found with number {sno}
+          </p>
+          <button 
+            onClick={() => router.push('/')}
+            className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700"
+          >
+            Go Home
+          </button>
+        </div>
       </div>
     );
   }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 flex items-center justify-center p-4">
-      <Card className="w-full max-w-sm shadow-2xl">
-        <CardHeader className="text-center bg-gradient-to-r from-green-600 to-emerald-600 text-white p-6 relative overflow-hidden">
+      <div className="w-full max-w-sm bg-white shadow-2xl rounded-lg overflow-hidden">
+        <div className="text-center bg-gradient-to-r from-green-600 to-emerald-600 text-white p-6 relative overflow-hidden">
           {/* Decorative elements */}
           <div className="absolute top-0 left-0 w-full h-full opacity-10">
             <div className="absolute top-2 left-2 w-6 h-6 border-2 border-white rounded-full"></div>
@@ -148,9 +145,9 @@ export default function ActivatePage() {
           
           <div className="relative z-10">
             <CheckCircle className="h-12 w-12 mx-auto mb-3 text-white" />
-            <CardTitle className="text-2xl font-bold mb-1">
+            <h1 className="text-2xl font-bold mb-1">
               {activated ? (booking.is_activated ? 'Ticket is Active!' : 'Ticket Deactivated!') : 'Processing Ticket...'}
-            </CardTitle>
+            </h1>
             <p className="text-white/90 text-sm">
               {activated 
                 ? (booking.is_activated 
@@ -160,19 +157,19 @@ export default function ActivatePage() {
               }
             </p>
           </div>
-        </CardHeader>
+        </div>
 
-        <CardContent className="p-6">
+        <div className="p-6">
           <div className="space-y-4">
             {/* Event Details */}
             <div className="text-center">
-              <h3 className="text-lg font-bold text-foreground mb-1">
+              <h3 className="text-lg font-bold text-gray-900 mb-1">
                 {booking.eventName}
               </h3>
-              <Badge className="bg-green-100 text-green-800 border-green-300 text-xs">
+              <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 border border-green-300">
                 <Star className="w-3 h-3 mr-1" />
                 {booking.is_activated ? 'Activated' : 'Not Activated'}
-              </Badge>
+              </span>
             </div>
 
             {/* Ticket Information - Compact */}
@@ -182,8 +179,8 @@ export default function ActivatePage() {
                   <User className="h-4 w-4 text-blue-600" />
                 </div>
                 <div>
-                  <p className="font-semibold text-foreground text-sm">{booking.userName}</p>
-                  <p className="text-xs text-muted-foreground">{booking.email}</p>
+                  <p className="font-semibold text-gray-900 text-sm">{booking.userName}</p>
+                  <p className="text-xs text-gray-600">{booking.email}</p>
                 </div>
               </div>
 
@@ -192,35 +189,34 @@ export default function ActivatePage() {
                   <Calendar className="h-4 w-4 text-green-600" />
                 </div>
                 <div>
-                  <p className="font-medium text-foreground text-sm">{booking.eventDate} at {booking.eventTime}</p>
+                  <p className="font-medium text-gray-900 text-sm">{booking.eventDate} at {booking.eventTime}</p>
                 </div>
               </div>
             </div>
 
             {/* Ticket Number */}
             <div className="text-center p-3 bg-gray-50 rounded-lg">
-              <p className="text-xs text-muted-foreground mb-1">Ticket Number</p>
-              <p className="font-mono text-base font-bold text-foreground">
+              <p className="text-xs text-gray-600 mb-1">Ticket Number</p>
+              <p className="font-mono text-base font-bold text-gray-900">
                 {booking.sno}
               </p>
             </div>
 
             {/* Action Buttons */}
             <div className="space-y-2">
-              <Button 
-                className="w-full bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white text-sm py-2"
+              <button 
+                className="w-full bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white text-sm py-2 rounded-lg"
                 onClick={() => router.push('/')}
               >
                 Go to Homepage
-              </Button>
+              </button>
               
-              <Button 
-                variant="outline" 
-                className="w-full text-sm py-2"
+              <button 
+                className="w-full border border-gray-300 text-gray-700 text-sm py-2 rounded-lg hover:bg-gray-50"
                 onClick={() => window.print()}
               >
                 Print Ticket
-              </Button>
+              </button>
             </div>
 
             {/* Success Message */}
@@ -244,8 +240,8 @@ export default function ActivatePage() {
               </div>
             )}
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     </div>
   );
 } 
