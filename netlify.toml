@@ -16,11 +16,9 @@
   NODE_ENV = "production"
   NPM_FLAGS = "--legacy-peer-deps"
 
-# Redirects for Next.js routing
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
+# Plugin configuration
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
 
 # Headers for security and performance
 [[headers]]
@@ -65,7 +63,6 @@
   from = "/*"
   to = "/index.html"
   status = 200
-  conditions = {Role = ["admin"]}
 
 # Functions (if using Netlify Functions)
 [functions]
@@ -75,10 +72,6 @@
 # Edge functions (if using Netlify Edge Functions)
 [edge_functions]
   directory = "netlify/edge-functions"
-
-# Plugin configuration
-[[plugins]]
-  package = "@netlify/plugin-nextjs"
 
 # Development settings
 [dev]
